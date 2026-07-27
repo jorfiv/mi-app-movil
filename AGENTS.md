@@ -19,5 +19,10 @@ Read the exact versioned docs at https://docs.expo.dev/versions/v57.0.0/ before 
 - Always check `package.json` for existing scripts before suggesting new ones.
 - Ensure any new dependency is correctly installed via `npx expo install`.
 
+
+## 5. Testing & Emulation
+- **Target:** Android Studio Emulator.
+- **Verification:** Before launching, ensure `adb` identifies the emulator via `adb devices`.
+- **Workflow:** Always verify functionality on the emulator before committing changes to Git.
 ---
 *Last updated: 2026-07-26*
