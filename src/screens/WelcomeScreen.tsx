@@ -1,15 +1,18 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useRouter } from 'expo-router';
 import { theme } from '../styles/theme';
 
 export const WelcomeScreen = () => {
+  const router = useRouter();
+
   return (
     <View style={styles.container}>
       <View style={styles.logoPlaceholder}>
         <Text style={styles.logoText}>LOGO</Text>
       </View>
       <Text style={styles.title}>¡Bienvenido a Tu App!</Text>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={() => router.push('/login')}>
         <Text style={styles.buttonText}>Comenzar</Text>
       </TouchableOpacity>
     </View>
