@@ -1,13 +1,13 @@
 import React from 'react';
 import { useRouter } from 'expo-router';
 import { useCart } from '../context/CartContext';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from 'react-native';
 import { theme } from '../styles/theme';
 
 const PRODUCTS = [
-  { id: '1', name: 'Producto A', price: 10 },
-  { id: '2', name: 'Producto B', price: 20 },
-  { id: '3', name: 'Producto C', price: 30 },
+  { id: '1', name: 'Lenovo IdeaPad Slim 3', price: 450000, image: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=400&auto=format&fit=crop' },
+  { id: '2', name: 'ASUS Vivobook', price: 600000, image: 'https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=400&auto=format&fit=crop' },
+  { id: '3', name: 'HP Pavilion', price: 850000, image: 'https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=400&auto=format&fit=crop' },
 ];
 
 export const DashboardScreen = () => {
@@ -16,7 +16,7 @@ export const DashboardScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Catálogo de Productos</Text>
+      <Text style={styles.title}>Catálogo de Notebooks</Text>
       <TouchableOpacity onPress={() => router.push('/cart')}>
         <Text style={styles.subtitle}>Ver Carrito ({totalItems} ítems)</Text>
       </TouchableOpacity>
@@ -26,10 +26,14 @@ export const DashboardScreen = () => {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.product}>
-            <Text style={styles.productText}>{item.name} - ${item.price}</Text>
-            <TouchableOpacity style={styles.addButton} onPress={() => addToCart(item)}>
-                <Text style={styles.addButtonText}>+ Agregar</Text>
-            </TouchableOpacity>
+            <Image source={{ uri: item.image }} style={styles.image} />
+            <View style={styles.info}>
+              <Text style={styles.productText}>{item.name}</Text>
+              <Text style={styles.price}>${item.price.toLocaleString('es-CL')}</Text>
+              <TouchableOpacity style={styles.addButton} onPress={() => addToCart(item)}>
+                  <Text style={styles.addButtonText}>+ Agregar</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         )}
       />
@@ -38,30 +42,14 @@ export const DashboardScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: theme.spacing.large,
-    backgroundColor: theme.colors.background,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: theme.spacing.small,
-  },
-  subtitle: {
-    fontSize: 18,
-    color: theme.colors.primary,
-    marginBottom: theme.spacing.medium,
-  },
-  product: {
-    padding: theme.spacing.medium,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  productText: { fontSize: 16 },
-  addButton: { padding: 8, backgroundColor: theme.colors.primary, borderRadius: 5 },
+  container: { flex: 1, padding: theme.spacing.large, backgroundColor: theme.colors.background },
+  title: { fontSize: 24, fontWeight: 'bold', marginBottom: theme.spacing.small },
+  subtitle: { fontSize: 18, color: theme.colors.primary, marginBottom: theme.spacing.medium },
+  product: { padding: theme.spacing.medium, borderBottomWidth: 1, borderBottomColor: '#eee', flexDirection: 'row', alignItems: 'center' },
+  image: { width: 80, height: 80, borderRadius: 8, marginRight: theme.spacing.medium },
+  info: { flex: 1 },
+  productText: { fontSize: 16, fontWeight: 'bold' },
+  price: { color: '#555', marginVertical: 4 },
+  addButton: { padding: 8, backgroundColor: theme.colors.primary, borderRadius: 5, alignSelf: 'flex-start' },
   addButtonText: { color: 'white', fontWeight: 'bold' },
 });

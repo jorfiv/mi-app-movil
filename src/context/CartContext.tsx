@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext } from 'react';
 
-export type Product = { id: string; name: string; price: number };
+export type Product = { id: string; name: string; price: number; image: string };
 type CartItem = { product: Product; quantity: number };
 
 const CartContext = createContext<{
