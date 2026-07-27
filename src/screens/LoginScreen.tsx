@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { useRouter } from 'expo-router';
 import { theme } from '../styles/theme';
 
 export const LoginScreen = () => {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -10,7 +12,7 @@ export const LoginScreen = () => {
     if (email === '' || password === '') {
       Alert.alert('Error', 'Por favor, completa todos los campos.');
     } else {
-      Alert.alert('Éxito', `Bienvenido, ${email.split('@')[0]}!`);
+      router.push('/dashboard');
     }
   };
 
