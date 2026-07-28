@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { theme } from '../styles/theme';
 
@@ -8,10 +8,11 @@ export const WelcomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.logoPlaceholder}>
-        <Text style={styles.logoText}>LOGO</Text>
-      </View>
-      <Text style={styles.title}>¡Bienvenido a Tu App!</Text>
+      <Image 
+        source={{ uri: 'https://cdn-icons-png.flaticon.com/512/3081/3081840.png' }} 
+        style={styles.logo} 
+      />
+      <Text style={styles.title}>Buy Notebook</Text>
       <TouchableOpacity style={styles.button} onPress={() => router.push('/login')}>
         <Text style={styles.buttonText}>Comenzar</Text>
       </TouchableOpacity>
@@ -27,21 +28,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: theme.spacing.large,
   },
-  logoPlaceholder: {
+  logo: {
     width: 120,
     height: 120,
-    borderRadius: 30,
-    backgroundColor: theme.colors.primary,
-    alignItems: 'center',
-    justifyContent: 'center',
     marginBottom: theme.spacing.large,
   },
-  logoText: {
-    color: theme.colors.white,
-    fontWeight: 'bold',
-  },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
     color: theme.colors.text,
     marginBottom: theme.spacing.large,
