@@ -17,13 +17,30 @@ src/
 └── components/    ← Componentes reutilizables
 ```
 
-## 3. Agent Interaction Rules
+## 3. Agentic Development Setup
+Este proyecto se desarrolla mediante el arnés **Oh My Pi (OMP)**.
+
+### Modelos AI (config.yml)
+- **Default:** `github-copilot/claude-sonnet-4.6`
+- **Smol (rápido):** `github-copilot/claude-haiku-4.5`
+- **Slow (análisis):** `github-copilot/gpt-5.5`
+
+### Skills & MCP Servers
+- **Skills (Globales en `~/.agents/skills/`):**
+    - `caveman`: Compresión de respuestas (ahorro de tokens).
+    - `frontend-design`: Guías de diseño UI.
+- **MCP Servers (`mcp.json`):**
+    - `context7`: Gestión de contexto (requiere `CONTEXT7_API_KEY`).
+    - `codegraph`: Indexado semántico del código (preparado).
+
+### Variables de Entorno (`.env`)
+Configura las siguientes variables en `~/.omp/agent/.env`:
+- `CONTEXT7_API_KEY`: Tu clave de Upstash.
+- `TAVILY_API_KEY`: Para capacidades de búsqueda web.
+
+## 4. Agent Interaction Rules
 - **Conciseness:** Be terse. Prioritize code over explanation.
 - **Commands:** Use `npx expo ...`.
-
-## 4. Development Harness
-- Always check `package.json` for existing scripts.
-- Ensure any new dependency is correctly installed via `npx expo install`.
 
 ## 5. Testing & Emulation
 - **Target:** Android Studio Emulator.
