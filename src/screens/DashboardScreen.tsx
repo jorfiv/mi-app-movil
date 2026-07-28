@@ -1,7 +1,8 @@
 import React from 'react';
 import { useRouter } from 'expo-router';
 import { useCart } from '../context/CartContext';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { theme } from '../styles/theme';
 
 const PRODUCTS = [
@@ -16,10 +17,18 @@ export const DashboardScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Catálogo de Notebooks</Text>
-      <TouchableOpacity onPress={() => router.push('/cart')}>
-        <Text style={styles.subtitle}>Ver Carrito ({totalItems} ítems)</Text>
-      </TouchableOpacity>
+      {/* Header con carrito a la derecha */}
+      <View style={styles.header}>
+        <Text style={styles.title}>Catálogo</Text>
+        <TouchableOpacity style={styles.cartButton} onPress={() => router.push('/cart')}>
+          <Ionicons name="cart-outline" size={28} color={theme.colors.text} />
+          {totalItems > 0 && (
+            <View style={styles.badge}>
+              <Text style={styles.badgeText}>{totalItems}</Text>
+            </View>
+          )}
+        </TouchableOpacity>
+      </View>
       
       <FlatList
         data={PRODUCTS}
@@ -31,7 +40,8 @@ export const DashboardScreen = () => {
             <View style={styles.product}>
               <Image source={{ uri: item.image }} style={styles.image} />
               <View style={styles.info}>
-                <Text style={styles.productText}>{item.name} - ${item.price.toLocaleString('es-CL')}</Text>
+                <Text style={styles.productText}>{item.name}</Text>
+                <Text style={styles.price}>${item.price.toLocaleString('es-CL')}</Text>
                 <View style={styles.controls}>
                   <TouchableOpacity style={styles.controlButton} onPress={() => removeFromCart(item.id)}>
                     <Text style={styles.controlButtonText}>-</Text>
@@ -49,7 +59,7 @@ export const DashboardScreen = () => {
 
       <TouchableOpacity 
         style={styles.paymentButton} 
-        onPress={() => Alert.alert('Pago', 'Gracias por comprar con nosotros')}
+        onPress={() => alert('Gracias por comprar con nosotros')}
       >
         <Text style={styles.buttonText}>Proceder al Pago</Text>
       </TouchableOpacity>
@@ -58,13 +68,17 @@ export const DashboardScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: theme.spacing.large, backgroundColor: theme.colors.background },
-  title: { fontSize: 24, fontWeight: 'bold', marginBottom: theme.spacing.small },
-  subtitle: { fontSize: 18, color: theme.colors.primary, marginBottom: theme.spacing.medium },
+  container: { flex: 1, padding: theme.spacing.large, paddingTop: 50, backgroundColor: theme.colors.background },
+  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 },
+  title: { fontSize: 28, fontWeight: 'bold' },
+  cartButton: { position: 'relative' },
+  badge: { position: 'absolute', right: -6, top: -6, backgroundColor: 'red', borderRadius: 10, width: 20, height: 20, alignItems: 'center', justifyContent: 'center' },
+  badgeText: { color: 'white', fontSize: 12, fontWeight: 'bold' },
   product: { padding: theme.spacing.medium, borderBottomWidth: 1, borderBottomColor: '#eee', flexDirection: 'row', alignItems: 'center' },
   image: { width: 80, height: 80, borderRadius: 8, marginRight: theme.spacing.medium },
   info: { flex: 1 },
   productText: { fontSize: 16, fontWeight: 'bold' },
+  price: { color: '#555', marginVertical: 4 },
   controls: { flexDirection: 'row', alignItems: 'center', marginTop: 5 },
   controlButton: { backgroundColor: theme.colors.primary, padding: 8, borderRadius: 5, width: 30, alignItems: 'center' },
   controlButtonText: { color: 'white', fontWeight: 'bold' },
