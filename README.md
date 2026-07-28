@@ -25,6 +25,11 @@ Aplicación móvil de e-commerce desarrollada con React Native y Expo.
    npx expo start
    ```
 
+## 📱 Definiciones del Stack Tecnológico
+- **React Native:** Framework utilizado para la construcción de la interfaz y lógica de la aplicación móvil.
+- **Expo:** Entorno de desarrollo que abstrae la configuración nativa, permitiendo un desarrollo ágil.
+- **Expo Go:** Aplicación de pruebas utilizada en el emulador para ejecutar y visualizar el código en tiempo real.
+
 ## 🧠 Prompt Engineering
 Esta aplicación ha sido desarrollada mediante una colaboración agéntica. Se realizaron más de 25 interacciones clave para definir la arquitectura, diseño y funcionalidad. Los prompts más importantes que definieron el curso del proyecto son:
 
