@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter } from 'expo-router';
 import { useCart } from '../context/CartContext';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { theme } from '../styles/theme';
 
@@ -17,7 +17,6 @@ export const DashboardScreen = () => {
 
   return (
     <View style={styles.container}>
-      {/* Header con carrito a la derecha */}
       <View style={styles.header}>
         <Text style={styles.title}>Catálogo</Text>
         <TouchableOpacity style={styles.cartButton} onPress={() => router.push('/cart')}>
@@ -70,19 +69,19 @@ export const DashboardScreen = () => {
 const styles = StyleSheet.create({
   container: { flex: 1, padding: theme.spacing.large, paddingTop: 50, backgroundColor: theme.colors.background },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 },
-  title: { fontSize: 28, fontWeight: 'bold' },
+  title: { fontSize: 28, fontWeight: 'bold', color: theme.colors.text },
   cartButton: { position: 'relative' },
-  badge: { position: 'absolute', right: -6, top: -6, backgroundColor: 'red', borderRadius: 10, width: 20, height: 20, alignItems: 'center', justifyContent: 'center' },
+  badge: { position: 'absolute', right: -6, top: -6, backgroundColor: theme.colors.accent, borderRadius: 10, width: 20, height: 20, alignItems: 'center', justifyContent: 'center' },
   badgeText: { color: 'white', fontSize: 12, fontWeight: 'bold' },
-  product: { padding: theme.spacing.medium, borderBottomWidth: 1, borderBottomColor: '#eee', flexDirection: 'row', alignItems: 'center' },
+  product: { padding: theme.spacing.medium, borderBottomWidth: 1, borderBottomColor: '#ddd', flexDirection: 'row', alignItems: 'center' },
   image: { width: 80, height: 80, borderRadius: 8, marginRight: theme.spacing.medium },
   info: { flex: 1 },
-  productText: { fontSize: 16, fontWeight: 'bold' },
+  productText: { fontSize: 16, fontWeight: 'bold', color: theme.colors.text },
   price: { color: '#555', marginVertical: 4 },
   controls: { flexDirection: 'row', alignItems: 'center', marginTop: 5 },
   controlButton: { backgroundColor: theme.colors.primary, padding: 8, borderRadius: 5, width: 30, alignItems: 'center' },
   controlButtonText: { color: 'white', fontWeight: 'bold' },
-  quantity: { marginHorizontal: 15, fontSize: 16, fontWeight: 'bold' },
-  paymentButton: { backgroundColor: 'green', padding: theme.spacing.medium, borderRadius: 8, alignItems: 'center', marginTop: 20 },
+  quantity: { marginHorizontal: 15, fontSize: 16, fontWeight: 'bold', color: theme.colors.text },
+  paymentButton: { backgroundColor: theme.colors.primary, padding: theme.spacing.medium, borderRadius: 8, alignItems: 'center', marginTop: 20 },
   buttonText: { color: 'white', fontWeight: 'bold' },
 });
