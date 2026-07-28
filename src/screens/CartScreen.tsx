@@ -5,7 +5,7 @@ import { useCart } from '../context/CartContext';
 import { theme } from '../styles/theme';
 
 export const CartScreen = () => {
-  const { cart, total } = useCart();
+  const { cart, addToCart, removeFromCart, total } = useCart();
   const router = useRouter();
 
   return (
@@ -18,9 +18,17 @@ export const CartScreen = () => {
           <View style={styles.item}>
             <Image source={{ uri: item.product.image }} style={styles.image} />
             <View style={styles.info}>
-              <Text style={styles.name}>{item.product.name}</Text>
-              <Text>Cant: {item.quantity}</Text>
+              <Text style={styles.name}>{item.product.name} x{item.quantity}</Text>
               <Text>${(item.product.price * item.quantity).toLocaleString('es-CL')}</Text>
+            </View>
+            <View style={styles.controls}>
+              <TouchableOpacity style={styles.controlButton} onPress={() => removeFromCart(item.product.id)}>
+                <Text style={styles.controlButtonText}>-</Text>
+              </TouchableOpacity>
+              <Text style={styles.quantity}>{item.quantity}</Text>
+              <TouchableOpacity style={styles.controlButton} onPress={() => addToCart(item.product)}>
+                <Text style={styles.controlButtonText}>+</Text>
+              </TouchableOpacity>
             </View>
           </View>
         )}
@@ -29,9 +37,9 @@ export const CartScreen = () => {
       
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={[styles.button, styles.backButton]} onPress={() => router.back()}>
-          <Text style={styles.buttonText}>Volver al Catálogo</Text>
+          <Text style={styles.buttonText}>Volver</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => Alert.alert('Pago', 'Procesando pago...')}>
+        <TouchableOpacity style={styles.button} onPress={() => Alert.alert('Pago', 'Gracias por comprar con nosotros')}>
           <Text style={styles.buttonText}>Proceder al Pago</Text>
         </TouchableOpacity>
       </View>
@@ -46,6 +54,10 @@ const styles = StyleSheet.create({
   image: { width: 50, height: 50, borderRadius: 5, marginRight: theme.spacing.medium },
   info: { flex: 1 },
   name: { fontWeight: 'bold' },
+  controls: { flexDirection: 'row', alignItems: 'center' },
+  controlButton: { backgroundColor: theme.colors.primary, padding: 8, borderRadius: 5, width: 30, alignItems: 'center' },
+  controlButtonText: { color: 'white', fontWeight: 'bold' },
+  quantity: { marginHorizontal: 10, fontSize: 16, fontWeight: 'bold' },
   total: { fontSize: 20, fontWeight: 'bold', marginTop: theme.spacing.large, textAlign: 'right' },
   buttonContainer: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 },
   button: { backgroundColor: theme.colors.primary, padding: theme.spacing.medium, borderRadius: 8, flex: 1, alignItems: 'center', marginHorizontal: 5 },

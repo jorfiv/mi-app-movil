@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter } from 'expo-router';
 import { useCart } from '../context/CartContext';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image, Alert } from 'react-native';
 import { theme } from '../styles/theme';
 
 const PRODUCTS = [
@@ -12,7 +12,7 @@ const PRODUCTS = [
 
 export const DashboardScreen = () => {
   const router = useRouter();
-  const { cart, totalItems, addToCart } = useCart();
+  const { cart, totalItems, addToCart, removeFromCart } = useCart();
 
   return (
     <View style={styles.container}>
@@ -24,19 +24,35 @@ export const DashboardScreen = () => {
       <FlatList
         data={PRODUCTS}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.product}>
-            <Image source={{ uri: item.image }} style={styles.image} />
-            <View style={styles.info}>
-              <Text style={styles.productText}>{item.name}</Text>
-              <Text style={styles.price}>${item.price.toLocaleString('es-CL')}</Text>
-              <TouchableOpacity style={styles.addButton} onPress={() => addToCart(item)}>
-                  <Text style={styles.addButtonText}>+ Agregar</Text>
-              </TouchableOpacity>
+        renderItem={({ item }) => {
+          const cartItem = cart.find(c => c.product.id === item.id);
+          const quantity = cartItem ? cartItem.quantity : 0;
+          return (
+            <View style={styles.product}>
+              <Image source={{ uri: item.image }} style={styles.image} />
+              <View style={styles.info}>
+                <Text style={styles.productText}>{item.name} - ${item.price.toLocaleString('es-CL')}</Text>
+                <View style={styles.controls}>
+                  <TouchableOpacity style={styles.controlButton} onPress={() => removeFromCart(item.id)}>
+                    <Text style={styles.controlButtonText}>-</Text>
+                  </TouchableOpacity>
+                  <Text style={styles.quantity}>{quantity}</Text>
+                  <TouchableOpacity style={styles.controlButton} onPress={() => addToCart(item)}>
+                    <Text style={styles.controlButtonText}>+</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
             </View>
-          </View>
-        )}
+          );
+        }}
       />
+
+      <TouchableOpacity 
+        style={styles.paymentButton} 
+        onPress={() => Alert.alert('Pago', 'Gracias por comprar con nosotros')}
+      >
+        <Text style={styles.buttonText}>Proceder al Pago</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -49,7 +65,10 @@ const styles = StyleSheet.create({
   image: { width: 80, height: 80, borderRadius: 8, marginRight: theme.spacing.medium },
   info: { flex: 1 },
   productText: { fontSize: 16, fontWeight: 'bold' },
-  price: { color: '#555', marginVertical: 4 },
-  addButton: { padding: 8, backgroundColor: theme.colors.primary, borderRadius: 5, alignSelf: 'flex-start' },
-  addButtonText: { color: 'white', fontWeight: 'bold' },
+  controls: { flexDirection: 'row', alignItems: 'center', marginTop: 5 },
+  controlButton: { backgroundColor: theme.colors.primary, padding: 8, borderRadius: 5, width: 30, alignItems: 'center' },
+  controlButtonText: { color: 'white', fontWeight: 'bold' },
+  quantity: { marginHorizontal: 15, fontSize: 16, fontWeight: 'bold' },
+  paymentButton: { backgroundColor: 'green', padding: theme.spacing.medium, borderRadius: 8, alignItems: 'center', marginTop: 20 },
+  buttonText: { color: 'white', fontWeight: 'bold' },
 });
